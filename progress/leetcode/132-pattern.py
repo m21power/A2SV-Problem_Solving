@@ -1,5 +1,17 @@
 class Solution:
     def find132pattern(self, nums: List[int]) -> bool:
+        
+        stack=[]
+        mi=nums[0]
+        for n in nums[1:]:
+            while stack and n>=stack[-1][0]:
+                stack.pop()
+            if stack and n>stack[-1][1]:
+                return True
+            stack.append([n,mi])
+            mi=min(mi,n)
+        return False
+        """
         n = len(nums)
         
         minFromLeft = [nums[0]]
@@ -16,15 +28,21 @@ class Solution:
                 stack.append(nums[j])
         
         return False
+        
         """
-        stack=[]
-        mi=nums[0]
-        for n in nums[1:]:
-            while stack and n>=stack[-1][0]:
+        """
+        class Solution:
+    def find132pattern(self, nums: List[int]) -> bool:
+        stack = [] # [num, currentMin]
+        curMin = nums[0]
+
+        for i in range(1, len(nums)):
+            while stack and nums[i] >= stack[-1][0]:
                 stack.pop()
-            if stack and n>stack[-1][1]:
+            if stack and nums[i] > stack[-1][1] and stack[-1][0]:
                 return True
-            stack.append([n,mi])
-            mi=min(mi,n)
-        return mi
+            stack.append((nums[i], curMin))
+            if curMin > nums[i]:
+                curMin = nums[i]
+        return False
         """
