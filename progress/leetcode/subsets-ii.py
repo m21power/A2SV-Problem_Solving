@@ -1,35 +1,18 @@
 class Solution:
-    def isValid(self,num,res):
-        if num in res:
-            return False
-        else:
-            return True
-    def finalRes(self,res):
-        for i in res:
-            i.sort()
-        for i in res:
-            n=res.count(i)
-            if n>1:
-                for _ in range(n-1):
-                    res.remove(i)
-            else:
-                pass
-        return res
-
+    
     def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
-        subset=[]
-        res=[]
-        idx=0
-        def cal(nums,subset,idx,res):
-            if self.isValid(subset[:],res):
-                res.append(subset[:])
-            else:
+        ans=[]
+        nums.sort()
+        def backtrack(sets,i):
+            if sets in ans:
                 pass
-            for i in range(idx,len(nums)):
-                subset.append(nums[i])
-                cal(nums,subset,i+1,res)
-                subset.pop()
-        cal(nums,subset,idx,res)
-        return self.finalRes(res)
+            else:
+                ans.append(sets[:])
+            for j in range(i,len(nums)):
+                sets.append(nums[j])
+                backtrack(sets,j+1)
+                sets.pop()
+        backtrack([],0)
+        return ans
 
         
